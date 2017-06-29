@@ -10,38 +10,23 @@
 
 #import "ReactNativePermissions.h"
 
-#if __has_include("RCTBridge.h")
-  #import "RCTBridge.h"
-#else
-  #import <React/RCTBridge.h>
-#endif
+#import <React/RCTBridge.h>
+#import <React/RCTConvert.h>
+#import <React/RCTEventDispatcher.h>
 
-#if __has_include("RCTConvert.h")
-  #import "RCTConvert.h"
-#else
-  #import <React/RCTConvert.h>
-#endif
-
-#if __has_include("RCTEventDispatcher.h")
-  #import "RCTEventDispatcher.h"
-#else
-  #import <React/RCTEventDispatcher.h>
-#endif
-
-#import "RNPLocation.h"
-#import "RNPBluetooth.h"
-#import "RNPNotification.h"
+//#import "RNPLocation.h"
+//#import "RNPBluetooth.h"
+//#import "RNPNotification.h"
 #import "RNPAudioVideo.h"
-#import "RNPEvent.h"
+//#import "RNPEvent.h"
 #import "RNPPhoto.h"
-#import "RNPContacts.h"
-#import "RNPBackgroundRefresh.h"
-#import "RNPSpeechRecognition.h"
+//#import "RNPContacts.h"
+//#import "RNPBackgroundRefresh.h"
 
 @interface ReactNativePermissions()
-@property (strong, nonatomic) RNPLocation *locationMgr;
-@property (strong, nonatomic) RNPNotification *notificationMgr;
-@property (strong, nonatomic) RNPBluetooth *bluetoothMgr;
+//@property (strong, nonatomic) RNPLocation *locationMgr;
+//@property (strong, nonatomic) RNPNotification *notificationMgr;
+//@property (strong, nonatomic) RNPBluetooth *bluetoothMgr;
 @end
 
 @implementation ReactNativePermissions
@@ -73,25 +58,13 @@ RCT_REMAP_METHOD(canOpenSettings, canOpenSettings:(RCTPromiseResolveBlock)resolv
     resolve(@(UIApplicationOpenSettingsURLString != nil));
 }
 
-    
-RCT_EXPORT_METHOD(openSettings:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(openSettings)
 {
     if (@(UIApplicationOpenSettingsURLString != nil)) {
-        
-        NSNotificationCenter * __weak center = [NSNotificationCenter defaultCenter];
-        id __block token = [center addObserverForName:UIApplicationDidBecomeActiveNotification
-                                               object:nil
-                                                queue:nil
-                                           usingBlock:^(NSNotification *note) {
-                                               [center removeObserver:token];
-                                               resolve(@YES);
-                                           }];
-        
         NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
         [[UIApplication sharedApplication] openURL:url];
     }
 }
-
 
 RCT_REMAP_METHOD(getPermissionStatus, getPermissionStatus:(RNPType)type json:(id)json resolve:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
@@ -99,11 +72,11 @@ RCT_REMAP_METHOD(getPermissionStatus, getPermissionStatus:(RNPType)type json:(id
     
     switch (type) {
             
-        case RNPTypeLocation: {
+    /*    case RNPTypeLocation: {
             NSString *locationPermissionType = [RCTConvert NSString:json];
             status = [RNPLocation getStatusForType:locationPermissionType];
             break;
-        }
+        }*/
         case RNPTypeCamera:
             status = [RNPAudioVideo getStatus:@"video"];
             break;
@@ -113,7 +86,7 @@ RCT_REMAP_METHOD(getPermissionStatus, getPermissionStatus:(RNPType)type json:(id
         case RNPTypePhoto:
             status = [RNPPhoto getStatus];
             break;
-        case RNPTypeContacts:
+   /*     case RNPTypeContacts:
             status = [RNPContacts getStatus];
             break;
         case RNPTypeEvent:
@@ -130,10 +103,7 @@ RCT_REMAP_METHOD(getPermissionStatus, getPermissionStatus:(RNPType)type json:(id
             break;
         case RNPTypeBackgroundRefresh:
             status = [RNPBackgroundRefresh getStatus];
-            break;
-        case RNPTypeSpeechRecognition:
-            status = [RNPSpeechRecognition getStatus];
-            break;
+            break;*/
         default:
             break;
     }
@@ -146,15 +116,15 @@ RCT_REMAP_METHOD(requestPermission, permissionType:(RNPType)type json:(id)json r
     NSString *status;
     
     switch (type) {
-        case RNPTypeLocation:
-            return [self requestLocation:json resolve:resolve];
+     //   case RNPTypeLocation:
+     //       return [self requestLocation:json resolve:resolve];
         case RNPTypeCamera:
             return [RNPAudioVideo request:@"video" completionHandler:resolve];
         case RNPTypeMicrophone:
             return [RNPAudioVideo request:@"audio" completionHandler:resolve];
         case RNPTypePhoto:
             return [RNPPhoto request:resolve];
-        case RNPTypeContacts:
+     /*   case RNPTypeContacts:
             return [RNPContacts request:resolve];
         case RNPTypeEvent:
             return [RNPEvent request:@"event" completionHandler:resolve];
@@ -163,16 +133,14 @@ RCT_REMAP_METHOD(requestPermission, permissionType:(RNPType)type json:(id)json r
         case RNPTypeBluetooth:
             return [self requestBluetooth:resolve];
         case RNPTypeNotification:
-            return [self requestNotification:json resolve:resolve];
-        case RNPTypeSpeechRecognition:
-            return [RNPSpeechRecognition request:resolve];
+            return [self requestNotification:json resolve:resolve];*/
         default:
             break;
     }
     
 
 }
-
+/*
 - (void) requestLocation:(id)json resolve:(RCTPromiseResolveBlock)resolve
 {
     if (self.locationMgr == nil) {
@@ -217,7 +185,7 @@ RCT_REMAP_METHOD(requestPermission, permissionType:(RNPType)type json:(id)json r
     [self.bluetoothMgr request:resolve];
 }
 
-
+*/
 
 
 @end

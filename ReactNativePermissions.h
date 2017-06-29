@@ -5,12 +5,9 @@
 //  Created by Yonah Forst on 18/02/16.
 //  Copyright © 2016 Yonah Forst. All rights reserved.
 //
+#import <React/RCTBridgeModule.h>
 
-#if __has_include("RCTBridgeModule.h")
-  #import "RCTBridgeModule.h"
-#else
-  #import <React/RCTBridgeModule.h>
-#endif
+#import <Foundation/Foundation.h>
 
 @interface ReactNativePermissions : NSObject <RCTBridgeModule>
 

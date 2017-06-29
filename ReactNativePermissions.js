@@ -16,7 +16,6 @@ const RNPTypes = {
 		'bluetooth',
 		'notification',
 		'backgroundRefresh',
-		'speechRecognition',
 	],
 	android: [
 		'location',
@@ -26,7 +25,6 @@ const RNPTypes = {
 		'event',
 		'photo',
 		'storage'
-		'notification',
 	]
 }
 
@@ -78,9 +76,6 @@ class ReactNativePermissions {
 		} else if (permission == 'location') {
 			options = type || 'whenInUse'
 		} else if (permission == 'notification') {
-			if (Platform.OS === 'android') {
-				return Promise.reject(`ReactNativePermissions: notification cannot be requested on Android`)
-			}
 			options = type || ['alert', 'badge', 'sound']
 		}
 
