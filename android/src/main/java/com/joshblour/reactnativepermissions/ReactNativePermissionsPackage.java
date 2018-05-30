@@ -16,10 +16,12 @@ public class ReactNativePermissionsPackage implements ReactPackage {
       return Arrays.<NativeModule>asList(new ReactNativePermissionsModule(reactContext));
     }
 
+    /* This causes an error : method does not override a supertype
     @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
       return Collections.emptyList();
     }
+    */
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
